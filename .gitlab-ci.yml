@@ -1,0 +1,31 @@
+build-debian:
+  image: gitlab.softcom.su:5050/dockerimaes/linux/cmake-clang:debian-bullseye
+  stage: build
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_C_COMPILER=clang-13 -DCMAKE_CXX_COMPILER=clang++-13 -G Ninja ..
+    - cmake --build .
+  artifacts:
+    when: on_success
+    expire_in: 30 days
+    paths:
+      - "build"
+  tags:
+    - Linux
+
+# build-alt:
+#   image: gitlab.softcom.su:5050/dockerimaes/linux/cmake-clang:alt-p10
+#   stage: build
+#   script:
+#     - mkdir build
+#     - cd build
+#     - cmake -DCMAKE_C_COMPILER=clang-13 -DCMAKE_CXX_COMPILER=clang++-13 -G Ninja ..
+#     - cmake --build .
+#   artifacts:
+#     when: on_success
+#     expire_in: 30 days
+#     paths:
+#       - "build"
+#   tags:
+#     - Linux
